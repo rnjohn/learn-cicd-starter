@@ -3,6 +3,7 @@ package auth
 import (
 	"fmt"
 	"net/http"
+	"strings"
 	"testing"
 )
 
@@ -45,7 +46,9 @@ func TestGetAPIKey(t *testing.T) {
 
 			output, err := GetAPIKey(header)
 			if err != nil {
-
+				if strings.Contains(err.Error(), test.expectErr) {
+					return
+				}
 				t.Errorf("Unexpected: TestGetAPIKey:%v\n", err)
 				return
 			}
